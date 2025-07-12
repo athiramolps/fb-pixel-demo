@@ -22,17 +22,46 @@
       background-color: #0056b3;
     }
     p { margin-bottom: 10px; }
+    #confirmation {
+      display: none;
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
   </style>
+
+  <!-- Facebook Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1334943400337358'); // Your Pixel ID
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1334943400337358&ev=PageView&noscript=1"
+  /></noscript>
 </head>
 <body>
 
   <h1>Event Shoot</h1>
 
+  <!-- Confirmation Message -->
+  <div id="confirmation">Product added to cart!</div>
+
   <!-- Service Image + Add to Cart -->
   <section>
     <h2>Gallery</h2>
     <img src="https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg" alt="Event Shoot" />
-    <button>Add to Cart</button>
+    <button onclick="addToCart('Event Shoot - Gallery')">Add to Cart</button>
   </section>
 
   <!-- Service Details -->
@@ -40,7 +69,7 @@
     <h2>Service Details</h2>
     <img src="https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg" alt="Event Details" />
     <p>Capture the excitement of your events with professional photography services suited for corporate, private parties, and concerts.</p>
-    <button>Add to Cart</button>
+    <button onclick="addToCart('Event Shoot - Service Details')">Add to Cart</button>
   </section>
 
   <!-- Package Option -->
@@ -48,8 +77,29 @@
     <h2>Event Shoot Package</h2>
     <img src="https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg" alt="Event Package" />
     <p>Full event coverage, quick turnaround time, and an online gallery for sharing.</p>
-    <button>Add to Cart</button>
+    <button onclick="addToCart('Event Shoot - Package')">Add to Cart</button>
   </section>
+
+  <script>
+    function addToCart(productName) {
+      const confirmation = document.getElementById('confirmation');
+      confirmation.textContent = productName + ' added to cart!';
+      confirmation.style.display = 'block';
+
+      setTimeout(() => {
+        confirmation.style.display = 'none';
+      }, 3000);
+
+      if (typeof fbq === 'function') {
+        fbq('track', 'AddToCart', {
+          content_name: productName,
+          content_category: 'Photography Service',
+          value: 0,
+          currency: 'GBP'
+        });
+      }
+    }
+  </script>
 
 </body>
 </html>
